@@ -8,7 +8,7 @@
 
 <body>
 
-    <h1>Fruit List</h1>
+    <h1>🍎 Fresh Fruit Store</h1>
 
     <ul id="fruitList"></ul>
 
@@ -16,12 +16,12 @@
 
         let list = document.getElementById("fruitList");
 
-        fetch("http://localhost:3000/api/fruits")
+        fetch("http://localhost:8000/api/fruits")
     .then(response => response.json())
     .then(fruits => {
         for (let fruit of fruits) {
             let item = document.createElement("li");
-            item.textContent = fruit;
+            item.textContent = `${fruit.name} - ₹${fruit.price}/kg`;
             list.appendChild(item);
         }
     })
