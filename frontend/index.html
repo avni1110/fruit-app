@@ -1,13 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fruit App</title>
 </head>
+
 <body>
 
-    <h1>Hello World!</h1>
+    <h1>Fruit List</h1>
+
+    <ul id="fruitList"></ul>
+
+    <script>
+
+        let list = document.getElementById("fruitList");
+
+        fetch("http://localhost:3000/api/fruits")
+    .then(response => response.json())
+    .then(fruits => {
+        for (let fruit of fruits) {
+            let item = document.createElement("li");
+            item.textContent = fruit;
+            list.appendChild(item);
+        }
+    })
+    .catch(error => {
+        console.error("Error fetching fruits:", error);
+    });
+
+    </script>
 
 </body>
+
 </html>
