@@ -13,5 +13,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Display Success Message
-        run: echo "GitHub Actions is working!"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: |
+          pip install -r backend/requirements.txt
+
+      - name: Build Check
+        run: |
+          python -m py_compile backend/app.py
+
+      - name: Build Successful
+        run: echo "Build completed successfully!"
