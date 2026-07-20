@@ -8,7 +8,7 @@ FRUITS = [
     {
         "id": 1,
         "name": "Apple",
-        "price": 220,
+        "price": 230,
         "unit": "kg"
     },
     {
