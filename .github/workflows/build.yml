@@ -1,4 +1,4 @@
-name: Build Fruit App
+name: Build and Deploy Fruit App
 
 on:
   push:
@@ -10,8 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -26,5 +25,22 @@ jobs:
         run: |
           python -m py_compile backend/app.py
 
-      - name: Build Successful
-        run: echo "Build completed successfully!"
+  deploy:
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.0
+
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+          script: |
+            cd ~/fruit-app
+            git pull
+            sudo systemctl restart fruit-app
+            sudo systemctl reload nginx
